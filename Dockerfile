@@ -1,7 +1,11 @@
-cd /opt
-docker image build -t $JOB_NAME:v1.$BUILD_ID .
-docker image tag $JOB_NAME:v1.$BUILD_ID aman9596/$JOB_NAME:v1.$BUILD_ID
-docker image tag $JOB_NAME:v1.$BUILD_ID aman9596/$JOB_NAME:latest
-docker image push aman9596/$JOB_NAME:v1.$BUILD_ID
-docker image push aman9596/$JOB_NAME:latest
-docker image rmi $JOB_NAME:v1.$BUILD_ID aman9596/$JOB_NAME:v1.$BUILD_ID aman9596/$JOB_NAME:latest
+FROM ubuntu:latest
+RUN apt install -y httpd \
+    zip \
+    unzip
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page265/shine.zip /var/www/html/
+WORKDIR /var/www/html
+RUN unzip shine.zip
+RUN cp -rvf shine/* .
+RUN rm -rf shine shine.zip
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE 80
