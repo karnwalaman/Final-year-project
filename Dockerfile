@@ -9,3 +9,5 @@ RUN cp -rvf srhu/* .
 RUN rm -rf srhu srhu.zip
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80
+
+
